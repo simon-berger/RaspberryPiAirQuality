@@ -5,7 +5,7 @@ from time import sleep
 from util.logging_util import log_info
 
 class BME688:
-    def __init__(self, sample_rate=bsec.BSEC_SAMPLE_RATE_LP):
+    def __init__(self, sample_rate=bsec.BSEC_SAMPLE_RATE_LP, enable_gas_measurement=cnst.BME68X_ENABLE):
         """
         Initializes the BME688 sensor object.
 
@@ -13,12 +13,19 @@ class BME688:
             sample_rate: (optional)
                 Sample rate for the sensor.
                 Default value: bsec.BSEC_SAMPLE_RATE_LP
+            enable_gas_measurement: (optional)
+                Specifies if the gas measurement is enabled or not.
+                Possible values: cnst.BME68X_ENABLE or cnst.BME68X_DISABLE
+                Default value: cnst.BME68X_ENABLE
         """
         # Create bme sensor object
         self.bme = BME68X(cnst.BME68X_I2C_ADDR_HIGH, 0)
 
         # Sensor config
         self.bme.set_sample_rate(sample_rate)
+        temp_prof = [320, 100, 100, 100, 200, 200, 200, 320, 320, 320]
+        dur_prof = [5, 2, 10, 30, 5, 5, 5, 5, 5, 5]
+        self.bme.set_heatr_conf(enable_gas_measurement,temp_prof, dur_prof, cnst.BME68X_PARALLEL_MODE)
 
         # Log
         log_info("Setup sensor: " + self.bme.get_variant())
