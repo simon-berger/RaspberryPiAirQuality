@@ -1,6 +1,7 @@
 from sensor.bme688 import BME688
 from time import sleep
 from util.logging_util import log_info
+from datetime import datetime
 import decimal
 import os
 
@@ -112,11 +113,14 @@ def main():
             for d_key in d:
                 d[d_key] = float(round(d[d_key], 2))
 
+            # Add timestamp
+            d["datetime"] = str(datetime.now().strftime("%d.%m.%Y %H:%M:%S"))
+
             # Write data values
             write_data_to_csv(d, filepath)
 
-            # Update every second
-            sleep(1)
+            # Sleep to reduce load
+            sleep(5)
     except KeyboardInterrupt:
         # Interrupt received
         log_info("Program stopped")
