@@ -1,2 +1,4 @@
 data/measurements.csv
 *.pyc
+data/measurements_old.csv
+src/python/sensor/__pycache__/bme688.cpython-39.pyc

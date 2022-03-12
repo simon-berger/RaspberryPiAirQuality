@@ -42,8 +42,6 @@ def write_data_to_csv(data, filepath):
             File path of the file the data is written to
     """
     # List of values that are not saved
-    #ignore_list = ["timestamp", "static_iaq", "static_iaq_accuracy", "raw_temperature", \
-    #            "raw_pressure", "raw_humidity", "raw_gas", "stabilization_status", "run_in_status"]
     ignore_list = []
 
     # Character that is used to split values
@@ -70,8 +68,6 @@ def write_data_to_csv(data, filepath):
                 # Write measurement data name
                 f.write(d_key)
         f.write("\n")
-
-    # Write columns header
 
     printed = False
     for d_key in data:
@@ -120,7 +116,7 @@ def main():
             write_data_to_csv(d, filepath)
 
             # Sleep to reduce load
-            sleep(5)
+            # sleep(5)
     except KeyboardInterrupt:
         # Interrupt received
         log_info("Program stopped")
